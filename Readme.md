@@ -12,11 +12,11 @@ Xavier Beltran Urbano,  Sudipto Dolui and John A Detre
 1. Clone the project:
   ```bash
   git https://github.com/xavibeltranurbano/QEI-Net/tree/main
-  cd DL-Ensemble-Brain-Tissue-Segmentation
+  cd QEI-Net
   ```
 2. Using a virtual environment is strongly recommended.
 ```bash
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
