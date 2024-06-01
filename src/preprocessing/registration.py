@@ -55,11 +55,13 @@ class Registration:
 
 
 if __name__ == "__main__":
-    path=''
+    path='/Users/xavibeltranurbano/Desktop/UPenn/Standard_Dataset/Datasets/QEI-Dataset'
     fileNames=[file for file in os.listdir(path) if not file.endswith('xlsx') and  not file.endswith('.DS_Store') and  not file.endswith('.xls') and  not file.endswith('.ipynb_checkpoints')]
     reg = Registration(target_size=(64, 64, 32))
+    #fileNames=['ASL_98','ASL_99']
     for folderName in fileNames:
         for name in os.listdir(os.path.join(path,folderName)):
-            newPath=os.path.join(path, folderName, name)
-            outputPath=os.path.join(path, folderName, f"{name.split('.nii')[0]}_Reg.nii")
-            reg.run(newPath, outputPath)
+            if not name.endswith('xlsx') and  not name.endswith('.DS_Store'):
+                newPath=os.path.join(path, folderName, name)
+                outputPath=os.path.join(path, folderName, f"{name.split('.nii')[0]}_Reg.nii")
+                reg.run(newPath, outputPath)

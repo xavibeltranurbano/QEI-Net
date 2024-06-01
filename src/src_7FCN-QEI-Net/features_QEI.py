@@ -12,7 +12,6 @@ from configuration import Configuration
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-
 class Features_QEI:
     def __init__(self, path):
         # Initialize the class with the path to the data
@@ -118,15 +117,13 @@ class Features_QEI:
         return features
 
     def normalizeFeatures(self, df):
-        # Normalize the features in the dataframe
-        features_to_normalize = df.iloc[:, -3:]  # Select only the last 3 columns
-        features_remaining = df.iloc[:, :-3]  # Select all columns except the last 3
+        # Normalize all features except the ID column
+        features_to_normalize = df.iloc[:, 1:]  # Select all columns except the first column (ID)
         scaler = MinMaxScaler()
         features_normalized_array = scaler.fit_transform(features_to_normalize)
         features_normalized = pd.DataFrame(features_normalized_array, columns=features_to_normalize.columns)
-        df.update(features_normalized)
-
-        return df
+        features_normalized.insert(0, df.columns[0], df.iloc[:, 0])  # Reinsert the ID column
+        return features_normalized
 
     def execute(self, listIDs):
         # Execute feature extraction for a list of IDs and save to Excel
@@ -140,9 +137,9 @@ class Features_QEI:
                                    "Negative_GM_CBF", "Mean", "Inverse_Std", "5th_Percentile", "95th_Percentile",
                                    "Kurtosis", "Shanon_Entropy", "Spatial_Gradient_X", "Spatial_Gradient_Y",
                                    "Spatial_Gradient_Z"])
-        df.to_excel("/home/xurbano/QEI-ASL/src_8_features/computed_features.xlsx", index=False)
-        return df
-
+        df_normalized = self.normalizeFeatures(df)
+        df_normalized.to_excel("/home/xurbano/QEI-ASL/new_code/src_7FCN-QEI-Net/computed_features.xlsx", index=False)
+        return df_normalized
 
 if __name__ == "__main__":
     imgPath = '/home/xurbano/QEI-ASL/data_final'

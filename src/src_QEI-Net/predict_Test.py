@@ -15,7 +15,7 @@ from configuration import Configuration
 from network import QEI_Net
 from keras.optimizers import Adam
 from tensorflow.keras.losses import MeanSquaredError
-from metrics import MSE, RMSE, Pred, Rat
+from metrics import MSE, Pred, Rat
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
@@ -37,27 +37,20 @@ def scatterPlot(ratings, predictions, currentFold, mse, networkName):
     plt.close()
 
 
-def compute_mse(y_true, y_pred):
+def compute_se(y_true, y_pred):
     # Computr MSE of the rating and predictions
     y_true = tf.convert_to_tensor(y_true, dtype=tf.float32)
     y_pred = tf.convert_to_tensor(y_pred, dtype=tf.float32)
-    squared_differences = tf.square(y_true - y_pred)
-    mse = tf.reduce_mean(squared_differences)
-    return mse
+    squared_difference = tf.square(y_true - y_pred)
+    return squared_difference
 
 
 def save_to_excel(fold_results, networkName, currentFold, writer):
     # Create DataFrame from the fold results
-    df = pd.DataFrame(fold_results, columns=['Name', 'Rating', 'Prediction', 'MSE'])
-
-    # Calculate the mean MSE and create a new DataFrame for it
-    mean_mse = {'Name': 'Mean MSE', 'Rating': None, 'Prediction': None, 'MSE': df['MSE'].mean()}
+    df = pd.DataFrame(fold_results, columns=['Name', 'Rating', 'Prediction', 'SE'])
+    mean_mse = {'Name': 'Mean MSE', 'Rating': None, 'Prediction': None, 'SE': df['SE'].mean()}
     mean_mse_df = pd.DataFrame([mean_mse])
-
-    # Concatenate the original DataFrame with the mean MSE DataFrame
     df_final = pd.concat([df, mean_mse_df], ignore_index=True)
-
-    # Write the DataFrame to a new sheet in the Excel file, named by the currentFold
     sheet_name = f'Fold_{currentFold}'
     df_final.to_excel(writer, sheet_name=sheet_name, index=False)
 
@@ -71,12 +64,12 @@ def predict_test(networkName):
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     K.clear_session()
     path = '/home/xurbano/QEI-ASL/data_final'
-    allMSE = []
+    allSE = []
     # Initialize the ExcelWriter for the single Excel file
     excel_path = f'/home/xurbano/QEI-ASL/results/{networkName}/All_Folds_Predictions.xlsx'
     with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
         with tf.device('/GPU:0'):
-            for currentFold in range(1, 2):
+            for currentFold in range(1, 6):
                 params = {
                     'pathData': path,
                     'targetSize': (64, 64, 32, 1),
@@ -95,19 +88,19 @@ def predict_test(networkName):
                     x, y = preprocessing.process_case(ID, path)
                     x = np.expand_dims(x, axis=0)
                     prediction = model.predict(x)[0]
-                    mse = compute_mse(y, prediction).numpy()  # Make sure to convert tensor to numpy value
-                    fold_results.append([ID, y, prediction[0], mse])
-                    allMSE.append(mse)
+                    squared_difference = compute_se(y, prediction).numpy()[0]  # Make sure to convert tensor to numpy value
+                    fold_results.append([ID, y, prediction[0], squared_difference])
+                    allSE.append(squared_difference)
 
                     # Save fold results to Excel
                 save_to_excel(fold_results, networkName, currentFold, writer)
-                ratings, predictions, mse_values = [item[1] for item in fold_results], [item[2] for item in
+                ratings, predictions, se_values = [item[1] for item in fold_results], [item[2] for item in
                                                                                         fold_results], [item[3] for item
                                                                                                         in fold_results]
-                scatterPlot(ratings, predictions, currentFold, np.mean(mse_values), networkName)
+                scatterPlot(ratings, predictions, currentFold, np.mean(se_values), networkName)
 
         print(f"Prediction and MSE results saved for each fold in the '{networkName}' directory.")
-        print(f"MEAN AVG MSE: {np.mean(allMSE)}")
+        print(f"MEAN AVG MSE: {np.mean(allSE)}")
 
 
 if __name__ == "__main__":

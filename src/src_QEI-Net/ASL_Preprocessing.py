@@ -9,15 +9,15 @@ import nibabel as nib
 import numpy as np
 import pandas as pd
 import scipy
+from scipy.ndimage import rotate
 
 
 class Preprocessing():
-    def __init__(self, data_aug, norm_intensity, imageSize, rater):
+    def __init__(self, data_aug, norm_intensity, imageSize):
         # Initialize the preprocessing class with given parameters
         self.dataAug = data_aug
         self.normIntensity = norm_intensity
         self.height, self.width, self.totalSlices = imageSize[0], imageSize[1], imageSize[2]
-        self.rater = rater
         self.ratings = pd.read_excel("/home/xurbano/QEI-ASL/data_final/Ratings.xlsx")
 
     def dataAugmentation(self, images):
@@ -25,42 +25,35 @@ class Preprocessing():
         augmented_img = []
         rand_flip1 = np.random.randint(0, 2)
         rand_flip2 = np.random.randint(0, 2)
-        for img in images:
-            if rand_flip1 == 1:
-                img = np.flip(img, 0)
-            if rand_flip2 == 1:
-                img = np.flip(img, 1)
+        rand_rotate = np.random.randint(0, 4) 
+        angle = np.random.uniform(-5, 5)  
+        for img in images: 
+            if rand_flip1 == 1: img = np.flip(img, 0)
+            if rand_flip2 == 1: img = np.flip(img, 1)
+            if rand_rotate == 1: img = rotate(img, angle, reshape=False, mode='nearest')
             augmented_img.append(img)
-        return augmented_img
-
-    def maskBackground(self, img, mask_value=0):
-        # Mask the background of the image
-        mask = img == mask_value
-        return mask
+        return np.asarray(augmented_img)
 
     def normalizeIntensity(self, img):
-        # Normalize the intensity of the image
+        # Define the range for normalization
         image_min, image_max = 0, 1
-        normalizedImage = ((img - np.min(img)) / (np.max(img) - np.min(img))) * (image_max - image_min) + image_min
-        return normalizedImage
-
-    def resizeImage(self, img):
-        # Resize the image to the target size
-        image_resized_spatially = scipy.ndimage.zoom(img, (self.height / img.shape[0], self.width / img.shape[1], 1),
-                                                     order=2)  # Resizing spatial dimensions
-        image_resized = scipy.ndimage.zoom(image_resized_spatially, (1, 1, self.totalSlices / img.shape[2]),
-                                           order=2)  # Adjusting z-dimension
-        return image_resized
+        img = np.clip(img, -10, 80)
+        background_mask = (img == 0)
+        img_non_background = img[~background_mask]
+        min_val = np.min(img_non_background)
+        max_val = np.max(img_non_background)
+        normalized_non_background = ((img_non_background - min_val) / (max_val - min_val)) * (
+                image_max - image_min) + image_min
+        epsilon = 1e-5
+        normalized_non_background = np.where(normalized_non_background == 0, epsilon, normalized_non_background)
+        normalized_img = np.zeros_like(img)
+        normalized_img[~background_mask] = normalized_non_background
+        return normalized_img
 
     def readAnnotation(self, ID):
         matched_row = self.ratings[self.ratings.iloc[:, 0] == ID]
         rating = (matched_row.iloc[-1, -1] - 1.0) / 3.0
         return rating
-
-    def saveImage(self, img, save_path):
-        # Save the processed image as a NIfTI file
-        new_image = nib.Nifti1Image(img, np.eye(4))  # Create a NIfTI image, assuming no affine transformation
-        nib.save(new_image, save_path)
 
     def readNiftiFile(self, path):
         # Read and return NIFTI file data
@@ -73,4 +66,7 @@ class Preprocessing():
         # Normalize intensities
         if self.normIntensity:
             img = self.normalizeIntensity(img)
+        if self.dataAug:
+            img=self.dataAugmentation(img)
+            
         return np.asarray(img), rating

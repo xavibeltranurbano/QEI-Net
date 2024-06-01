@@ -36,7 +36,7 @@ class Utils:
 
         early_stopping_callback = EarlyStopping(
             monitor='val_loss',
-            patience=60,  # Number of epochs with no improvement after which training will be stopped.
+            patience=30,  # Number of epochs with no improvement after which training will be stopped.
             verbose=1
         )
 

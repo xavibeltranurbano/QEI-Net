@@ -12,7 +12,7 @@ import pandas as pd
 import glob
 import scipy
 import cv2
-
+from scipy.ndimage import rotate
 
 class Preprocessing():
     def __init__(self, data_aug, norm_intensity, imageSize, rater):
@@ -28,24 +28,30 @@ class Preprocessing():
         augmented_img = []
         rand_flip1 = np.random.randint(0, 2)
         rand_flip2 = np.random.randint(0, 2)
+        rand_rotate = np.random.randint(0, 4)
+        angle = np.random.uniform(-5, 5)
         for img in images:
-            if rand_flip1 == 1:
-                img = np.flip(img, 0)
-            if rand_flip2 == 1:
-                img = np.flip(img, 1)
+            if rand_flip1 == 1: img = np.flip(img, 0)
+            if rand_flip2 == 1: img = np.flip(img, 1)
+            if rand_rotate == 1: img = rotate(img, angle, reshape=False, mode='nearest')
             augmented_img.append(img)
-        return augmented_img
-
-    def maskBackground(self, img, mask_value=0):
-        # Mask the background of the image
-        mask = img == mask_value
-        return mask
+        return np.asarray(augmented_img)
 
     def normalizeIntensity(self, img):
-        # Normalize the intensity of the image
+        # Define the range for normalization
         image_min, image_max = 0, 1
-        normalizedImage = ((img - np.min(img)) / (np.max(img) - np.min(img))) * (image_max - image_min) + image_min
-        return normalizedImage
+        img = np.clip(img, -10, 80)
+        background_mask = (img == 0)
+        img_non_background = img[~background_mask]
+        min_val = np.min(img_non_background)
+        max_val = np.max(img_non_background)
+        normalized_non_background = ((img_non_background - min_val) / (max_val - min_val)) * (
+                image_max - image_min) + image_min
+        epsilon = 1e-5
+        normalized_non_background = np.where(normalized_non_background == 0, epsilon, normalized_non_background)
+        normalized_img = np.zeros_like(img)
+        normalized_img[~background_mask] = normalized_non_background
+        return normalized_img
 
     def resizeImage(self, img):
         # Resize the image to the target size

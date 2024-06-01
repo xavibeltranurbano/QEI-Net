@@ -9,6 +9,7 @@ from dataGenerator import DataGenerator
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
+import random
 
 
 class Configuration():
@@ -18,7 +19,7 @@ class Configuration():
         self.batchSize = batchSize  # Batch size for the data generator
         self.allIDS = [filename for filename in os.listdir(self.pathData)
                        if filename != ".DS_Store" and not filename.endswith(".xls") and not filename.endswith(".xlsx")]
-        np.random.shuffle(sorted(self.allIDS))  # Shuffle all IDs
+        #np.random.shuffle(sorted(self.allIDS))  # Shuffle all IDs
         self.currentFold = currentFold  # Current fold number for cross-validation
         self.createFolds()  # Create training and validation folds
 
@@ -47,6 +48,8 @@ class Configuration():
         kfold = {i: [] for i in range(5)}
         for category in categories:
             vecNames = categories[category]
+            random.seed(48)
+            random.shuffle(vecNames)
             nFold = len(vecNames) // 5
             for i in range(5):
                 startIndex = i * nFold
@@ -67,7 +70,7 @@ class Configuration():
             trainNames = [name for name in allRatings['IDS'] if name not in self.valFolds[i]]
             self.trainFolds[i] = trainNames
 
-    def createDataGenerator(self, listIDS, dataAugmentation, shuffle):
+    def createDataGenerator(self, listIDS,rater, dataAugmentation,shuffle):
         # Create a data generator
         data_generator = DataGenerator(
             image_directory=self.pathData,
@@ -75,14 +78,15 @@ class Configuration():
             batch_size=self.batchSize,
             target_size=self.targetSize,
             data_augmentation=dataAugmentation,
+            rater= rater,
             shuffle=shuffle)
         return data_generator
 
-    def createAllDataGenerators(self):
+    def createAllDataGenerators(self,rater):
         # Create data generators for the current fold
-        trainingIDS, validationIDS = self.trainFolds[self.currentFold - 1], self.valFolds[self.currentFold - 1]
-        train_generator = self.createDataGenerator(trainingIDS, dataAugmentation=True, shuffle=True)
-        validation_generator = self.createDataGenerator(validationIDS, dataAugmentation=False, shuffle=False)
+        trainingIDS,validationIDS=self.trainFolds[self.currentFold-1],self.valFolds[self.currentFold-1]
+        train_generator = self.createDataGenerator(trainingIDS,rater, dataAugmentation=True, shuffle=True)
+        validation_generator = self.createDataGenerator(validationIDS,rater, dataAugmentation=False, shuffle=False)
         return train_generator, validation_generator
 
     def returnVal_IDS(self):

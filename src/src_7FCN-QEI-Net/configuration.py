@@ -9,6 +9,7 @@ from dataGenerator import DataGenerator
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
+import random
 
 
 class Configuration():
@@ -18,7 +19,6 @@ class Configuration():
         self.batchSize = batchSize  # Batch size for the data generator
         self.allIDS = [filename for filename in os.listdir(self.pathData)
                        if filename != ".DS_Store" and not filename.endswith(".xls") and not filename.endswith(".xlsx")]
-        np.random.shuffle(sorted(self.allIDS))  # Shuffle all IDs
         self.currentFold = currentFold  # Current fold number for cross-validation
         self.createFolds()  # Create training and validation folds
 
@@ -47,6 +47,8 @@ class Configuration():
         kfold = {i: [] for i in range(5)}
         for category in categories:
             vecNames = categories[category]
+            random.seed(48)
+            random.shuffle(vecNames)
             nFold = len(vecNames) // 5
             for i in range(5):
                 startIndex = i * nFold

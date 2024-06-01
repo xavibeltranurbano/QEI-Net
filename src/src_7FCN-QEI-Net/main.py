@@ -32,7 +32,7 @@ def run_program(config, networkName, params):
         # Train the model
         model_checkpoint_callback, reduce_lr_callback, early_stopping_callback = utils.allCallbacks(networkName, params[
             'currentFold'])
-        epochs = 4000
+        epochs = 2000
         history = model.fit(trainGenerator, validation_data=valGenerator, epochs=epochs, verbose=1,
                             callbacks=[reduce_lr_callback, model_checkpoint_callback, early_stopping_callback])
 
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         params = {
             'pathData': imgPath,
             'targetSize': (14,),
-            'batchSize': 256,
+            'batchSize': 64,
             'currentFold': i
         }
 
@@ -70,9 +70,10 @@ if __name__ == "__main__":
 
         # Configuration of the experiment
         config = Configuration(**params)
-
+        print(config.returnVal_IDS())
+        
         # Run experiment
         run_program(config, networkName, params)
 
     # Create some plots
-    predict_test()
+    predict_test(networkName)

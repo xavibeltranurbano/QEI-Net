@@ -1,4 +1,4 @@
-from tensorflow.keras.layers import Input, Conv3D, MaxPooling3D, Activation, Dense, Flatten, Add
+from tensorflow.keras.layers import Input, Conv3D, MaxPooling3D, Activation, Dense, Flatten, Add,Dropout
 from tensorflow.keras.models import Model
 
 
@@ -28,7 +28,7 @@ class MSC_QEI_Net:
     def get_model(self):
         # Build and return the model
         inputs = Input(self.imgSize)
-        FACTOR = 4
+        FACTOR = 2
         POOL_SIZE = (2, 2, 2)
         STRIDES = (2, 2, 2)
 
@@ -44,9 +44,13 @@ class MSC_QEI_Net:
         conv4 = self.conv_block_residual_connections(128 * FACTOR, pool3)
         pool4 = MaxPooling3D(pool_size=POOL_SIZE, strides=STRIDES)(conv4)
 
-        conv5 = self.conv_block_residual_connections(256 * FACTOR, pool4)
+        conv5 = self.conv_block_residual_connections(128 * FACTOR, pool4)
 
         output = Flatten()(conv5)
+        output = Dense(128, activation='relu')(output)
+        output = Dropout(0.2)(output)
+        output = Dense(32, activation='relu')(output)
+        output = Dropout(0.2)(output)
         output = Dense(4, activation='softmax')(output)
         model = Model(inputs=inputs, outputs=output)
         return model

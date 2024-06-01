@@ -39,15 +39,15 @@ if __name__ == "__main__":
     tf.random.set_seed(seed)
     np.random.seed(seed)
     random.seed(seed)
-    raters = ['Ali', 'JD', 'RW']
+    raters = ['JD', 'SD']
     os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}", exist_ok=True)  # Create folder for this experiment
-    for i in range(1, 5):
+    for i in range(1, 6):
         print("\n******************************************")
         print(f"----------Current Fold: {i}----------")
         params = {
             'pathData': imgPath,
             'targetSize': (64, 64, 32, 1),
-            'batchSize': 32,
+            'batchSize': 64,
             'currentFold': i
         }
         config = Configuration(**params)
@@ -56,4 +56,4 @@ if __name__ == "__main__":
             print(f"\nRater {rater}")
             os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}/{rater}/{i}", exist_ok=True)  # Create folder for this experiment
             run_program(config, networkName, params, rater)  # Run experiment
-    predict_test()
+    predict_test(networkName)

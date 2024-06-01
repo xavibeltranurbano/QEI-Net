@@ -15,6 +15,7 @@ import tensorflow as tf
 from predict_Test import predict_test
 import numpy as np
 import random
+from tensorflow.keras.losses import MeanSquaredError
 
 
 def run_program(config, networkName, params):
@@ -48,13 +49,13 @@ if __name__ == "__main__":
 
     os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}", exist_ok=True)  # Create folder for this experiment
 
-    for i in range(1, 5):
+    for i in range(1, 6):
         print("\n******************************************")
         print(f"----------Current Fold: {i}----------")
         params = {
             'pathData': imgPath,
             'targetSize': (64, 64, 32, 1),
-            'batchSize': 64,  # 20 works well
+            'batchSize': 32,  # 20 works well
             'currentFold': i
         }
 
