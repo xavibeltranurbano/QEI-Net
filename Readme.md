@@ -108,14 +108,17 @@ We developed and compared several innovative models to enhance the automated qua
 ### Discarding Unacceptable Images
 One of the objectives of this project is to develop a methodology for rejecting CBF maps with unacceptable quality to avoid bias in subsequent statistical analysis. After computing the QEI using the presented DL approaches, we calculated the Youden Index (YI) to set the threshold between data to retain and data to exclude. Expert ratings were binarized as follows: images rated 1 by any rater were classified as Unacceptable Quality (0), while all other images were classified as Acceptable Quality (1). Using the YI, we set the threshold to discard unacceptable quality ASL CBF maps. Additionally, we calculated a customized threshold which ensures a sensitivity of at least 95%.
 
-### Discarding Unacceptable ImagesA 3D Binary Classification Network (BC-Net)
+### A 3D Binary Classification Network (BC-Net)
 One of the main objectives of this project is to develop a robust method for discarding unacceptable CBF Maps, which can be framed as a binary classification problem instead of assigning a continuous number defining the quality. Therefore, we also implemented a 3D deep learning classifier with a binary loss function to tackle the problem. For this model, we used the same parameters and architecture as the QEI-Net methodology described in Section 3.6. The only difference lies in the ground truth used to train the network. For QEI-Net, we used continuous values within the range [0,1], whereas for BC-QEI-Net, we used binary values. The output of the BC-Net, which employs a Sigmoid activation function in its final FCL, fall within the range of 0 to 1. This value represents the probability that a given sample is of acceptable quality. 
 
 ### Additional Experiments
 To develop a more robust method, various combinations of the previous methods were studied. However, since some models represent the QEI and BC-Net represent the probability of possessing acceptable quality, only the best performing methodologies specifically focused on assessing a QEI (QEI-Net, 7FCN-QEI-Net, and MSC-QEI-Net) were utilized. The different combination methods are as follows:
-1.	Ensemble 1: This is the simplest ensemble method, which consists of averaging the predictions from each of the networks. 
-2.	Ensemble 2: In this method, we calculate the weighted average of the predictions. To calculate the weights of each method, we have trained a function that optimizes the weights assigned to the different models to minimize the MSE between the actual and prediction. 
-3.	Ensemble 3: This method utilizes stacking, an ensemble technique that combines the predictions of multiple base models to enhance predictive performance. In this approach, the predictions from all the QEI models serve as input features for a meta-model, which was trained using leave-one-out cross-validation (LOO CV) with a Linear Regression algorithm that learns to make the final prediction by leveraging the strengths and mitigating the weaknesses of the individual models.
+1.	**Ensemble 1:** This is the simplest ensemble method, which consists of averaging the predictions from each of the networks. 
+2.	**Ensemble 2:** In this method, we calculate the weighted average of the predictions. To calculate the weights of each method, we have trained a function that optimizes the weights assigned to the different models to minimize the MSE between the actual and prediction. 
+3.	**Ensemble 3:** This method utilizes stacking, an ensemble technique that combines the predictions of multiple base models to enhance predictive performance. In this approach, the predictions from all the QEI models serve as input features for a meta-model, which was trained using leave-one-out cross-validation (LOO CV) with a Linear Regression algorithm that learns to make the final prediction by leveraging the strengths and mitigating the weaknesses of the individual models.
+
+
+For more detailed information, please refer to the [manuscript](manuscript/MAIA_Master_Thesis_Template.pdf).
 
 ## References
 
