@@ -86,12 +86,12 @@ Minimal preprocessing was required to maintain the integrity of the raw images:
 - **FCN-QEI-Net**: Binarization of brain tissue probability maps and image smoothing.
 - **CNN approaches (QEI-Net,  MSC-QEI-Net and BC-Net)**: Affine Transformation for consistent image size, intensity clipping with the values [-10, 80] and normalization of image values.
 
-<div style="text-align: center;">
-  <figure>
-    <img src="img/PREPROCESSING.png" alt="Workflow of the preprocessing pipeline." width="400"/>
-    <figcaption>Figure 2. Workflow of the preprocessing pipeline.</figcaption>
-  </figure>
-</div>
+<p align="center">
+  <img src="img/PREPROCESSING.png" alt="Workflow of the preprocessing pipeline." width="400"/>
+</p>
+<p align="center">
+  <em>Figure 2. Workflow of the preprocessing pipeline.</em>
+</p>
 
 
 ### DL Models for quality assesment of ASL CBF Maps
