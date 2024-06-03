@@ -59,10 +59,11 @@ In this study, a dataset comprising 250 samples was utilized. The samples were c
 
 <p align="center">
   <img src="img/dataset.png" alt="Example of the ASL CBF rating tool." width="800"/>
+<em> Table.1. Examples of a distinct case for each rating value.  </em>  
   <br>
 </p>
 
-To ensure consistency in the evaluation process across different raters, specific guidelines were estab- lished and followed (see Figure 5). These guidelines are defined below:
+To ensure consistency in the evaluation process across different raters, specific guidelines were established and followed (see Figure 5). These guidelines are defined below:
 
 * **Unacceptable (rating1):** CBF map is severely degraded by artifacts and is uninterpretable.
 * **Poor (rating 2):** CBF map has one or more major artifacts, but can still potentially yield useful information.
@@ -71,7 +72,7 @@ To ensure consistency in the evaluation process across different raters, specifi
 
 <p align="center">
   <img src="img/rating_examples.png" alt="Example of the ASL CBF rating tool." width="800"/>
-  <em> Figure.1. Examples of a distinct case for each rating value.  </em>  
+  <em> Table.1. Information of the different datasets used in this work.  </em>  
 <br>
 </p>
 
