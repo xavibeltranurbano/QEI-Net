@@ -50,7 +50,7 @@ QEI-ASL-CBF/
 ```
 To reproduce the results, choose one of the aproaches presented in this work, and execute the main.py script:
 ```bash
-python3 src_QEINet/main.py
+python3 src_QEI-Net/main.py
 ```
 This will train and validate the selected model, storing the results in the results/ directory. Ensure to update the paths with your own directories as needed.
 
