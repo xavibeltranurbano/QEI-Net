@@ -117,6 +117,38 @@ To develop a more robust method, various combinations of the previous methods we
 2.	**Ensemble 2:** In this method, we calculate the weighted average of the predictions. To calculate the weights of each method, we have trained a function that optimizes the weights assigned to the different models to minimize the MSE between the actual and prediction. 
 3.	**Ensemble 3:** This method utilizes stacking, an ensemble technique that combines the predictions of multiple base models to enhance predictive performance. In this approach, the predictions from all the QEI models serve as input features for a meta-model, which was trained using leave-one-out cross-validation (LOO CV) with a Linear Regression algorithm that learns to make the final prediction by leveraging the strengths and mitigating the weaknesses of the individual models.
 
+### Results
+
+### Table 1: QEI Performance
+
+| Approach                        | SE (Mean) | SE (std) | Pearson Correlation |
+|---------------------------------|-----------|----------|---------------------|
+| (Dolui et al. (2024))’s approach| 0.02160   | 0.03184  | 0.90338             |
+| 7FCN-QEI-Net                    | 0.01646   | 0.02986  | 0.92312             |
+| QEI-Net                         | 0.01251   | 0.02213  | 0.94262             |
+| MSC-QEI-Net                     | 0.02491   | 0.02659  | 0.91202             |
+| Ensemble 1                      | 0.01144   | 0.02008  | 0.94725             |
+| Ensemble 2                      | **0.01112**   | **0.01917**  | **0.94864**             |
+| Ensemble 3                      | 0.01144   | 0.02011  | 0.94710             |
+
+*Table 1: Comparison of SE (Mean and std) and Pearson Correlation across different approaches.*
+
+### Table 2: Performance on discarding unacceptable CBF Maps by utilizing the Youden Index (YI) and a customized threshold for 95% sensitivity 
+
+| Approach               | AUC    | Sensitivity (YI) | Specificity (YI) | YI Value | Sensitivity (95%) | Specificity (95%) | Threshold Value (95%) |
+|------------------------|--------|------------------|----------------|----------|-------------------|-------------------|-----------------------|
+| Dolui et al. 2024 QEI  | 0.94754| 0.9037           | 0.92174        | 0.45681  | **0.96296**           | 0.54783           | 0.21641               |
+| 7FCN-QEI-Net           | 0.95027| **0.91111**          | 0.92174        | 0.32457  | 0.95556           | 0.66957           | 0.16466               |
+| QEI-Net                | 0.95768| 0.81481          | **0.96522**        | 0.46078  | 0.95556           | 0.7913            | 0.24179               |
+| MSC-QEI-Net            | 0.93739| 0.79259          | 0.95652        | 0.41027  | 0.95556           | 0.57391           | 0.2615                |
+| BC-QEI-Net             | 0.94074| 0.88889          | 0.85217        | 0.61382  | 0.95556           | 0.66087           | 0.21526               |
+| Ensemble 1             | 0.96329| 0.88889          | 0.93043        | 0.34831  | 0.95556           | **0.8087**            | 0.23381               |
+| Ensemble 2             | **0.96367**| 0.8963           | 0.91304        | 0.32739  | 0.95556           | 0.8               | 0.23538               |
+| Ensemble 3             | 0.96245| 0.8963           | 0.91304        | 0.32634  | 0.95556           | 0.7913            | 0.23197               |
+
+*Table 2: Comparison of AUC, Sensitivity, Specificity, YI Value, and Threshold Value at 95% Sensitivity across different approaches.*
+
+
 
 For more detailed information, please refer to the [manuscript](manuscript/MAIA_Master_Thesis_Template.pdf).
 
