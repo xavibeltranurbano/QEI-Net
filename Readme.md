@@ -23,7 +23,7 @@ pip3 install -r requirements.txt
 ## Reproducing the Results
 The project utilizes the following folder structure
 ```bash
-DL-Ensemble-Brain-Tissue-Segmentation/
+QEI-ASL-CBF/
 ├── data
 │   ├── ASL_1
 │   ├    ├── CBF_Map.nii
