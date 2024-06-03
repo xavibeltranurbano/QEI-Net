@@ -21,7 +21,7 @@ class Preprocessing():
         self.normIntensity = norm_intensity
         self.height, self.width, self.totalSlices = imageSize[0], imageSize[1], imageSize[2]
         self.rater = rater
-        self.ratings = pd.read_excel("/home/xurbano/QEI-ASL/data_final/Ratings.xlsx")
+        self.ratings = pd.read_excel("/data_final/Ratings.xlsx")
 
     def dataAugmentation(self, images):
         # Perform data augmentation on the images
@@ -53,24 +53,11 @@ class Preprocessing():
         normalized_img[~background_mask] = normalized_non_background
         return normalized_img
 
-    def resizeImage(self, img):
-        # Resize the image to the target size
-        image_resized_spatially = scipy.ndimage.zoom(img, (self.height / img.shape[0], self.width / img.shape[1], 1),
-                                                     order=2)  # Resizing spatial dimensions
-        image_resized = scipy.ndimage.zoom(image_resized_spatially, (1, 1, self.totalSlices / img.shape[2]),
-                                           order=2)  # Adjusting z-dimension
-        return image_resized
-
     def readAnnotation(self, ID):
         # Return the annotation (rating) for a specific ID
         matched_row = self.ratings[self.ratings.iloc[:, 0] == ID]
         rating = matched_row[self.rater].values[0]
         return int(rating)
-
-    def saveImage(self, img, save_path):
-        # Save the processed image as a NIfTI file
-        new_image = nib.Nifti1Image(img, np.eye(4))  # Create a NIfTI image, assuming no affine transformation
-        nib.save(new_image, save_path)
 
     def readNiftiFile(self, path):
         # Read and return NIFTI file data
@@ -83,4 +70,6 @@ class Preprocessing():
         # Normalize intensities
         if self.normIntensity:
             img = self.normalizeIntensity(img)
+        if self.dataAug:
+            img = self.dataAugmentation(img)
         return np.asarray(img), rating

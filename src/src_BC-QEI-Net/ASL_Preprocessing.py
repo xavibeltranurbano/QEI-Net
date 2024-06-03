@@ -22,7 +22,7 @@ class Preprocessing():
         self.dataAug = data_aug
         self.normIntensity = norm_intensity
         self.height, self.width, self.totalSlices = imageSize[0], imageSize[1], imageSize[2]
-        self.ratings = pd.read_excel("/home/xurbano/QEI-ASL/data_final/Binarized_Ratings.xlsx")
+        self.ratings = pd.read_excel("/data_final/Binarized_Ratings.xlsx")
 
     def dataAugmentation(self, images):
         # Perform data augmentation on the images

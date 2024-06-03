@@ -28,19 +28,19 @@ def run_program(config, networkName, params, rater):
         model_checkpoint_callback, reduce_lr_callback, early_stopping_callback = utils.allCallbacks(networkName, params['currentFold'], rater)
         epochs = 400
         history = model.fit(trainGenerator, validation_data=valGenerator, epochs=epochs, verbose=1, callbacks=[model_checkpoint_callback, reduce_lr_callback, early_stopping_callback])
-        utils.save_training_plots(history, f"/home/xurbano/QEI-ASL/results/{networkName}/{rater}/{params['currentFold']}/training_plots.png")
+        utils.save_training_plots(history, f"/results/{networkName}/{rater}/{params['currentFold']}/training_plots.png")
         loss, acc = model.evaluate(valGenerator, verbose=1)
         print(f"\nVal: MSE= {acc}, Loss= {loss}")
 
 if __name__ == "__main__":
-    imgPath = '/home/xurbano/QEI-ASL/data_final'
+    imgPath = '/data_final'
     networkName = "MSC-QEI-Net"
     seed = 48
     tf.random.set_seed(seed)
     np.random.seed(seed)
     random.seed(seed)
-    raters = ['JD', 'SD']
-    os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}", exist_ok=True)  # Create folder for this experiment
+    raters = ['JD', 'SD','ZW']
+    os.makedirs(f"/results/{networkName}", exist_ok=True)  # Create folder for this experiment
     for i in range(1, 6):
         print("\n******************************************")
         print(f"----------Current Fold: {i}----------")
@@ -54,6 +54,6 @@ if __name__ == "__main__":
         print(config.returnVal_IDS())
         for rater in raters:
             print(f"\nRater {rater}")
-            os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}/{rater}/{i}", exist_ok=True)  # Create folder for this experiment
+            os.makedirs(f"/results/{networkName}/{rater}/{i}", exist_ok=True)  # Create folder for this experiment
             run_program(config, networkName, params, rater)  # Run experiment
     predict_test(networkName)

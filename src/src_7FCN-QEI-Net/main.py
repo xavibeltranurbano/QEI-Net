@@ -38,21 +38,21 @@ def run_program(config, networkName, params):
 
         # Plot the results and save the image
         utils.save_training_plots(history,
-                                  f"/home/xurbano/QEI-ASL/results/{networkName}/{params['currentFold']}/training_plots.png")
+                                  f"/results/{networkName}/{params['currentFold']}/training_plots.png")
         # Predict test set
         loss, acc, _, _ = model.evaluate(valGenerator, verbose=1)
         print(f"\nVal: MSE= {acc}, Loss= {loss}")
 
 
 if __name__ == "__main__":
-    imgPath = '/home/xurbano/QEI-ASL/data_final'
+    imgPath = '/data_final'
     networkName = "7FCN-QEI-Net"
     seed = 48
     tf.random.set_seed(48)
     np.random.seed(48)
     random.seed(48)
     # Create folder for this experiment
-    os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}", exist_ok=True)
+    os.makedirs(f"/results/{networkName}", exist_ok=True)
 
     for i in range(1, 6):
         print("\n******************************************")
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         }
 
         # Create folder for this experiment
-        os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}/{i}", exist_ok=True)
+        os.makedirs(f"/results/{networkName}/{i}", exist_ok=True)
 
         # Configuration of the experiment
         config = Configuration(**params)

@@ -11,7 +11,7 @@ import numpy as np
 import os
 
 
-class Registration:
+class Transformation:
     def __init__(self, target_size=(64, 64, 32)):
         # Initialize the registration class with the target size
         self.target_size = target_size
@@ -55,13 +55,12 @@ class Registration:
 
 
 if __name__ == "__main__":
-    path='/Users/xavibeltranurbano/Desktop/UPenn/Standard_Dataset/Datasets/QEI-Dataset'
+    path='/Datasets/QEI-Dataset'
     fileNames=[file for file in os.listdir(path) if not file.endswith('xlsx') and  not file.endswith('.DS_Store') and  not file.endswith('.xls') and  not file.endswith('.ipynb_checkpoints')]
-    reg = Registration(target_size=(64, 64, 32))
-    #fileNames=['ASL_98','ASL_99']
+    affine = Transformation(target_size=(64, 64, 32))
     for folderName in fileNames:
         for name in os.listdir(os.path.join(path,folderName)):
             if not name.endswith('xlsx') and  not name.endswith('.DS_Store'):
                 newPath=os.path.join(path, folderName, name)
                 outputPath=os.path.join(path, folderName, f"{name.split('.nii')[0]}_Reg.nii")
-                reg.run(newPath, outputPath)
+                affine.run(newPath, outputPath)

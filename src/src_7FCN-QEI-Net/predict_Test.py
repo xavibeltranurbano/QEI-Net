@@ -23,7 +23,7 @@ import random
 
 def scatterPlot(ratings, predictions, currentFold, mse, networkName):
     # Create scatter plot of ratings vs predictions
-    os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}/plotsValidation/ScatterPlot", exist_ok=True)
+    os.makedirs(f"/results/{networkName}/plotsValidation/ScatterPlot", exist_ok=True)
     plt.scatter(ratings, predictions, color='blue', label='Data points')
     plt.plot([0, 1], [0, 1], color='red', linestyle='--',
              label='Perfect prediction')  # Add a diagonal dashed line for reference
@@ -31,7 +31,7 @@ def scatterPlot(ratings, predictions, currentFold, mse, networkName):
     plt.ylabel('Predictions')
     plt.title('Scatter Plot of the QEI-ASL')
     plt.legend([f'Predicted QEI (MSE {mse:.4f})', 'Perfect QEI'])
-    save_path = f'/home/xurbano/QEI-ASL/results/{networkName}/plotsValidation/ScatterPlot/{currentFold}.png'
+    save_path = f'/results/{networkName}/plotsValidation/ScatterPlot/{currentFold}.png'
     plt.savefig(save_path)
     plt.close()
 
@@ -67,12 +67,12 @@ def predict_test(networkName):
     random.seed(seed)
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     K.clear_session()
-    path = '/home/xurbano/QEI-ASL/data_final'
+    path = '/data_final'
     allSE = []
     # Initialize the ExcelWriter for the single Excel file
-    excel_path = f'/home/xurbano/QEI-ASL/results/{networkName}/All_Folds_Predictions.xlsx'
-    features = pd.read_excel("/home/xurbano/QEI-ASL/new_code/src_7FCN-QEI-Net/computed_features.xlsx")
-    ratings_excel = pd.read_excel("/home/xurbano/QEI-ASL/data_final/Ratings.xlsx")
+    excel_path = f'/results/{networkName}/All_Folds_Predictions.xlsx'
+    features = pd.read_excel("src_7FCN-QEI-Net/computed_features.xlsx")
+    ratings_excel = pd.read_excel("/data_final/Ratings.xlsx")
     with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
         with tf.device('/GPU:0'):
             for currentFold in range(1, 6):
@@ -87,7 +87,7 @@ def predict_test(networkName):
                 network = FCDN_QEI(nFeatures=params['targetSize'])
                 model = network.get_model()
                 model.compile(optimizer=Adam(learning_rate=0.0001), loss='mean_squared_error', metrics=[MSE, Pred, Rat])
-                model.load_weights(f"/home/xurbano/QEI-ASL/results/7FCN-QEI-Net/{currentFold}/Best_Model.keras")
+                model.load_weights(f"/results/7FCN-QEI-Net/{currentFold}/Best_Model.keras")
 
                 fold_results = []
                 for ID in valIDs:

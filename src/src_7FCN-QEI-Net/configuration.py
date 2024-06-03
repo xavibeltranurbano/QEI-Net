@@ -97,7 +97,7 @@ class Configuration():
 
 
 if __name__ == "__main__":
-    path = '/home/xurbano/QEI-ASL/data_final'
+    path = '/data_final'
     # Parameters of the training
     params = {
         'pathData': path,

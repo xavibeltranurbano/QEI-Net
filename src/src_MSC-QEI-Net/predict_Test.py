@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 
 def scatterPlot(ratings, predictions, currentFold, mse,networkName):
     # Create scatter plot of ratings vs predictions
-    os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}/plotsValidation/ScatterPlot",
+    os.makedirs(f"/results/{networkName}/plotsValidation/ScatterPlot",
                 exist_ok=True)
     plt.scatter(ratings, predictions, color='blue', label='Data points')
     plt.plot([0, 1], [0, 1], color='red', linestyle='--',
@@ -27,7 +27,7 @@ def scatterPlot(ratings, predictions, currentFold, mse,networkName):
     plt.ylabel('Predictions')
     plt.title('Scatter Plot of the QEI-ASL')
     plt.legend([f'Predicted QEI (MSE {mse:.4f})', 'Perfect QEI'])
-    save_path = f'/home/xurbano/QEI-ASL/results/{networkName}/plotsValidation/ScatterPlot/{currentFold}.png'
+    save_path = f'/results/{networkName}/plotsValidation/ScatterPlot/{currentFold}.png'
     plt.savefig(save_path)
     plt.close()
 
@@ -47,7 +47,7 @@ def reorder_columns(df):
 
 def save_to_excel(all_results, networkName):
     # Save results to an Excel file
-    excel_path = f'/home/xurbano/QEI-ASL/results/{networkName}/All_Folds_Predictions.xlsx'
+    excel_path = f'/results/{networkName}/All_Folds_Predictions.xlsx'
     with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
         for fold, data in all_results.items():
             if not data:  # Check if data list is empty
@@ -69,8 +69,8 @@ def predict_test(networkName):
     # Predict the test set
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
     K.clear_session()
-    path = '/home/xurbano/QEI-ASL/data_final'
-    raters = ['JD', 'SD']  # ['Ali', 'JD', 'RW']
+    path = '/data_final'
+    raters = ['JD', 'SD','ZW']
     seed = 48
     tf.random.set_seed(seed)
     np.random.seed(seed)
@@ -93,7 +93,7 @@ def predict_test(networkName):
                 network = MSC_QEI_Net(imgSize=params['targetSize'])
                 model = network.get_model()
                 model.load_weights(
-                    f"/home/xurbano/QEI-ASL/results/{networkName}/{rater}/{currentFold}/Best_Model.keras")
+                    f"/results/{networkName}/{rater}/{currentFold}/Best_Model.keras")
 
                 for ID in valIDs:
                     x, y = preprocessing.process_case(ID, path)

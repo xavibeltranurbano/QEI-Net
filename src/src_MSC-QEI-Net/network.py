@@ -7,20 +7,12 @@ class MSC_QEI_Net:
         # Initialize the class with the image size
         self.imgSize = imgSize
 
-    def conv_block(self, size, x):
-        # Define a convolutional block
-        conv = Conv3D(size, (3, 3, 3), padding='same', kernel_initializer='glorot_uniform')(x)
-        conv = Activation('relu')(conv)
-        conv = Conv3D(size, (3, 3, 3), padding='same', kernel_initializer='glorot_uniform')(conv)
-        conv = Activation('relu')(conv)
-        return conv
-
     def conv_block_residual_connections(self, size, x):
         # Define a convolutional block with residual connections
-        conv = Conv3D(size, (3, 3, 3), padding='same', kernel_initializer='glorot_uniform')(x)
+        conv = Conv3D(size, (3, 3, 3), padding='same', kernel_initializer='glorot_normal')(x)
         conv = Activation('relu')(conv)
-        conv = Conv3D(size, (3, 3, 3), padding='same', kernel_initializer='glorot_uniform')(conv)
-        x = Conv3D(size, (1, 1, 1), padding='same', kernel_initializer='glorot_uniform')(x)
+        conv = Conv3D(size, (3, 3, 3), padding='same', kernel_initializer='glorot_normal')(conv)
+        x = Conv3D(size, (1, 1, 1), padding='same', kernel_initializer='glorot_normal')(x)
         output = Add()([x, conv])
         output = Activation('relu')(output)
         return output
@@ -42,11 +34,8 @@ class MSC_QEI_Net:
         pool3 = MaxPooling3D(pool_size=POOL_SIZE, strides=STRIDES)(conv3)
 
         conv4 = self.conv_block_residual_connections(128 * FACTOR, pool3)
-        pool4 = MaxPooling3D(pool_size=POOL_SIZE, strides=STRIDES)(conv4)
 
-        conv5 = self.conv_block_residual_connections(128 * FACTOR, pool4)
-
-        output = Flatten()(conv5)
+        output = Flatten()(conv4)
         output = Dense(128, activation='relu')(output)
         output = Dropout(0.2)(output)
         output = Dense(32, activation='relu')(output)

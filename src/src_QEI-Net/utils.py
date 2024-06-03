@@ -16,7 +16,7 @@ class Utils:
     @staticmethod
     def allCallbacks(networkName, currentFold):
         # Create and return callbacks for model checkpointing, learning rate reduction, and early stopping
-        pathWeights = f"/home/xurbano/QEI-ASL/results/{networkName}/{currentFold}"
+        pathWeights = f"/results/{networkName}/{currentFold}"
         checkpoint_path = pathWeights + "/Best_Model.keras"
         model_checkpoint_callback = ModelCheckpoint(
             filepath=checkpoint_path,

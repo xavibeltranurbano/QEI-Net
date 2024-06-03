@@ -29,7 +29,7 @@ def compute_metrics(y_true, y_pred):
     return sensitivity, specificity, youden_index.max(), auc_score, best_threshold, fpr, tpr, best_fpr, best_tpr
 
 def plot_roc_curve(y_true, y_pred, networkName):
-    os.makedirs(f"/home/xurbano/QEI-ASL/results/{networkName}/plotsValidation/ROC_Curve", exist_ok=True)
+    os.makedirs(f"/results/{networkName}/plotsValidation/ROC_Curve", exist_ok=True)
     sensitivity, specificity, youden_index, auc_score, best_threshold, fpr, tpr, best_fpr, best_tpr = compute_metrics(y_true, y_pred)
     plt.plot(fpr, tpr, color='blue', label=f'ROC curve (AUC = {auc_score:.4f})')
     plt.plot([0, 1], [0, 1], color='red', linestyle='--')
@@ -38,7 +38,7 @@ def plot_roc_curve(y_true, y_pred, networkName):
     plt.ylabel('True Positive Rate')
     plt.title('Receiver Operating Characteristic (ROC) Curve')
     plt.legend(loc='lower right')
-    save_path = f'/home/xurbano/QEI-ASL/results/{networkName}/plotsValidation/ROC_Curve/AllFolds.png'
+    save_path = f'/results/{networkName}/plotsValidation/ROC_Curve/AllFolds.png'
     plt.savefig(save_path)
     plt.close()
     return auc_score
@@ -80,12 +80,12 @@ def predict_test(networkName):
     random.seed(seed)
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     K.clear_session()
-    path = '/home/xurbano/QEI-ASL/data_final'
+    path = '/data_final'
     all_fold_results = []
     all_y_true = []
     all_y_pred = []
     # Initialize the ExcelWriter for the single Excel file
-    excel_path = f'/home/xurbano/QEI-ASL/results/{networkName}/All_Folds_Predictions.xlsx'
+    excel_path = f'/results/{networkName}/All_Folds_Predictions.xlsx'
     with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
         with tf.device('/GPU:0'):
             for currentFold in range(1, 6):
@@ -100,7 +100,7 @@ def predict_test(networkName):
                 valIDs = config.returnVal_IDS()
                 network = MSC_QEI_Net(imgSize=params['targetSize'])
                 model = network.get_model()
-                model.load_weights(f"/home/xurbano/QEI-ASL/results/{networkName}/{currentFold}/Best_Model.keras")
+                model.load_weights(f"/results/{networkName}/{currentFold}/Best_Model.keras")
 
                 fold_results = []
                 for ID in valIDs:

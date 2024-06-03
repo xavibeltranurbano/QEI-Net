@@ -138,11 +138,11 @@ class Features_QEI:
                                    "Kurtosis", "Shanon_Entropy", "Spatial_Gradient_X", "Spatial_Gradient_Y",
                                    "Spatial_Gradient_Z"])
         df_normalized = self.normalizeFeatures(df)
-        df_normalized.to_excel("/home/xurbano/QEI-ASL/new_code/src_7FCN-QEI-Net/computed_features.xlsx", index=False)
+        df_normalized.to_excel("/src_7FCN-QEI-Net/computed_features.xlsx", index=False)
         return df_normalized
 
 if __name__ == "__main__":
-    imgPath = '/home/xurbano/QEI-ASL/data_final'
+    imgPath = '/data_final'
     QEI_features = Features_QEI(imgPath)
     params = {
         'pathData': imgPath,

@@ -23,8 +23,8 @@ class DataGenerator(Sequence):
         self.shuffle = shuffle
         self.data_augmentation = data_augmentation
         self.indexes = np.arange(len(self.list_IDs))
-        self.features = pd.read_excel("/home/xurbano/QEI-ASL/new_code/src_7FCN-QEI-Net/computed_features.xlsx")
-        self.ratings = pd.read_excel("/home/xurbano/QEI-ASL/data_final/Ratings.xlsx")
+        self.features = pd.read_excel("/src_7FCN-QEI-Net/computed_features.xlsx")
+        self.ratings = pd.read_excel("/data_final/Ratings.xlsx")
         self.on_epoch_end()
 
     def __len__(self):
