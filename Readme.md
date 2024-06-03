@@ -95,13 +95,13 @@ We developed and compared several innovative models to enhance the automated qua
 
 - **7-Feature-based FCN (7-FCN-QEI-Net)**: Building on the [8]'s approach, this model incorporates four additional features to enhance the robustness and accuracy of the quality assessment. The integration of these comprehensive features allows for a more nuanced analysis of the ASL CBF maps.
 
-- **QEI-Net**: A deep learning-based regression model specifically tailored for assessing the QEI of ASL CBF maps. QEI-Net employs advanced neural network architectures to process the raw imaging data directly, facilitating an automated, precise evaluation.
+- **Deep learning-based regression model (QEI-Net)**: A deep learning-based regression model specifically tailored for assessing the QEI of ASL CBF maps. QEI-Net employs advanced neural network architectures to process the raw imaging data directly, facilitating an automated, precise evaluation.
 
-- **MSC-QEI-Net**: A novel multi-stage classification approach that leverages the assessments from individual raters. This model synthesizes the outputs into a continuous QEI by balancing the insights from multiple expert evaluations, ensuring a well-rounded and accurate measurement.
+- **A 3D Multi-Stage Classification Model (MSC-QEI-Net)**: A novel multi-stage classification approach that leverages the assessments from individual raters. This model synthesizes the outputs into a continuous QEI by balancing the insights from multiple expert evaluations, ensuring a well-rounded and accurate measurement.
 
 <p align="center">
   <img src="img/combined_all.png" alt="Example of the ASL CBF rating tool." width="800"/>
-  <em> Figure.3. Schematic of the different deep learning pipelines implemented in this work. A) Feature-Based approach (FCN-QEI-Net) B) Regression approach (QEI-Net) C) Multi-Stage Classification approach (MSC-QEI-Net). </em>  
+  <em> Figure.3. Schematic of the different deep learning pipelines implemented in this work. A) Feature-Based approach (7FCN-QEI-Net) B) Regression approach (QEI-Net) C) Multi-Stage Classification approach (MSC-QEI-Net). </em>  
 <br>
 </p>
 
