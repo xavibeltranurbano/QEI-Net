@@ -70,7 +70,7 @@ To ensure consistency in the evaluation process across different raters, specifi
 * **Average (rating 3):** Acceptable quality CBF map with minor artifacts that do not significantly reduce. 
 * **Excellent (rating 4):** High quality CBF map without artifacts.
 
-<div align="center">
+<div style="text-align: center;">
   <figure>
     <img src="img/rating_examples.png" alt="Example of the ASL CBF rating tool." width="400"/>
     <figcaption>Figure 1. Examples of a distinct case for each rating value.</figcaption>
@@ -86,12 +86,13 @@ Minimal preprocessing was required to maintain the integrity of the raw images:
 - **FCN-QEI-Net**: Binarization of brain tissue probability maps and image smoothing.
 - **CNN approaches (QEI-Net,  MSC-QEI-Net and BC-Net)**: Affine Transformation for consistent image size, intensity clipping with the values [-10, 80] and normalization of image values.
 
-<div align="center">
+<div style="text-align: center;">
   <figure>
     <img src="img/PREPROCESSING.png" alt="Workflow of the preprocessing pipeline." width="400"/>
     <figcaption>Figure 2. Workflow of the preprocessing pipeline.</figcaption>
   </figure>
 </div>
+
 
 ### DL Models for quality assesment of ASL CBF Maps
 We developed and compared several innovative models to enhance the automated quality evaluation index (QEI) of ASL CBF maps (see Figure 1):
