@@ -71,7 +71,7 @@ To ensure consistency in the evaluation process across different raters, specifi
 * **Excellent (rating 4):** High quality CBF map without artifacts.
 
 <p align="center">
-  <img src="img/rating_examples.png" alt="Example of the ASL CBF rating tool." width="800"/>
+  <img src="img/rating_examples.png" alt="Example of the ASL CBF rating tool." width="300"/>
   <em> Figure.1. Examples of a distinct case for each rating value.    </em>  
 <br>
 </p>
@@ -85,7 +85,7 @@ Minimal preprocessing was required to maintain the integrity of the raw images:
 - **CNN approaches (QEI-Net,  MSC-QEI-Net and BC-Net)**: Affine Registration for consistent image size and normalization of image values.
 
 <p align="center">
-  <img src="img/PREPROCESSING.png" alt="Example of the ASL CBF rating tool." width="800"/>
+  <img src="img/PREPROCESSING.png" alt="Example of the ASL CBF rating tool." width="300"/>
   <em> Figure.2. Workflow of the preprocessing pipeline.  </em>  
 <br>
 </p>
