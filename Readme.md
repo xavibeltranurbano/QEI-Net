@@ -119,7 +119,7 @@ To develop a more robust method, various combinations of the previous methods we
 
 ### Results
 
-### Table 1: QEI Performance
+### Table 1: Quality Assessment performance
 
 | Approach                        | SE (Mean) | SE (std) | Pearson Correlation |
 |---------------------------------|-----------|----------|---------------------|
