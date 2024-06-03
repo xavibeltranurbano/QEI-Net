@@ -41,13 +41,12 @@ QEI-ASL-CBF/
 │   ├    └── CSF_prob_CO_Reg.nii
     └── ...
 ├── src
-│   ├── src_QEINet
-│   ├── src_3_FCN_QEINet
-│   ├── src_8_FCN_QEINet
-│   ├── src_7_FCN_QEINet
-│   ├── src_MSC_QEINet
+│   ├── src_QEI-Net
+│   ├── src_3_FCN_QEI-Net
+│   ├── src_8_FCN_QEI-Net
+│   ├── src_7_FCN_QEI-Net
+│   ├── src_MSC_QEI-Net
 │   ├── preprocessing
-│   ├── thresholding
 ```
 To reproduce the results, choose one of the aproaches presented in this work, and execute the main.py script:
 ```bash
