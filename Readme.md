@@ -70,12 +70,14 @@ To ensure consistency in the evaluation process across different raters, specifi
 * **Average (rating 3):** Acceptable quality CBF map with minor artifacts that do not significantly reduce. 
 * **Excellent (rating 4):** High quality CBF map without artifacts.
 
-<div style="text-align: center;">
-  <figure>
-    <img src="img/rating_examples.png" alt="Example of the ASL CBF rating tool." width="400"/>
-    <figcaption>Figure 1. Examples of a distinct case for each rating value.</figcaption>
-  </figure>
-</div>
+
+<p align="center">
+  <img src="img/rating_examples.png" alt="Workflow of the preprocessing pipeline." width="400"/>
+</p>
+<p align="center">
+  <em>Figure 1. Examples of a distinct case for each rating value..</em>
+</p>
+
 
 
 ### Metrics
