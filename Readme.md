@@ -52,7 +52,7 @@ To reproduce the results, choose one of the aproaches presented in this work, an
 ```bash
 python3 src_QEINet/main.py
 ```
-This will train and validate the selected model and store the results in results/.
+This will train and validate the selected model, storing the results in the results/ directory. Ensure to update the paths with your own directories as needed.
 
 ## Dataset
 In this study, a dataset comprising 250 samples was utilized. The samples were collected from several large,multisite studies that utilized diverse ASL acquisition protocols, as detailed in Table 1. The ratings of the ASL CBF data were meticulously assessed by three expert raters: John A. Detre, Sudipto Dolui and Ze Wang. Dr. Detre is the inventor of ASL and has over 30 years of experience working with this technique. Dr. Dolui and Dr. Wang each have more than 10 years of experience. Their extensive experience in ASL CBF quality assurance ensures the dataset’s reliability and validity.
