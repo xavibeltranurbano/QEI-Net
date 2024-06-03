@@ -70,11 +70,11 @@ To ensure consistency in the evaluation process across different raters, specifi
 * **Average (rating 3):** Acceptable quality CBF map with minor artifacts that do not significantly reduce. 
 * **Excellent (rating 4):** High quality CBF map without artifacts.
 
-<p align="center">
-  <img src="img/rating_examples.png" alt="Example of the ASL CBF rating tool." width="300"/>
-  <em> Figure.1. Examples of a distinct case for each rating value.    </em>  
-<br>
-</p>
+<figure>
+  <img src="img/rating_examples.png" alt="Example of the ASL CBF rating tool." width="400"/>
+  <figcaption>Figure 1. Examples of a distinct case for each rating value.</figcaption>
+</figure>
+
 
 ### Metrics
 The effectiveness of various approaches was analyzed using the Mean Squared Error (MSE) metric, assessing the difference between predicted and expert ratings. Additionally, other metrics such as sensitivity, specificity, the area under the curve (AUC), and Pearson Correlation, have also been used to evaluate this study.
@@ -83,13 +83,11 @@ The effectiveness of various approaches was analyzed using the Mean Squared Erro
 Minimal preprocessing was required to maintain the integrity of the raw images:
 - **FCN-QEI-Net**: Binarization of brain tissue probability maps and image smoothing.
 - **CNN approaches (QEI-Net,  MSC-QEI-Net and BC-Net)**: Affine Registration for consistent image size and normalization of image values.
-
-<p align="center">
-  <img src="img/PREPROCESSING.png" alt="Example of the ASL CBF rating tool." width="300"/>
-  <em> Figure.2. Workflow of the preprocessing pipeline.  </em>  
-<br>
-</p>
-
+- 
+<figure>
+  <img src="img/PREPROCESSING.png" alt="Workflow of the preprocessing pipeline." width="400"/>
+  <figcaption>Figure 2. Workflow of the preprocessing pipeline.</figcaption>
+</figure>
 ### DL Models for quality assesment of ASL CBF Maps
 We developed and compared several innovative models to enhance the automated quality evaluation index (QEI) of ASL CBF maps (see Figure 1):
 
