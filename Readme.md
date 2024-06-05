@@ -54,20 +54,9 @@ python3 src_Reg-QEI-Net/main.py
 This will train and validate the selected model, storing the results in the results/ directory. Ensure to update the paths with your own directories as needed.
 
 ## Dataset
-<html>
-<head>
-    <style>
-        .justified-text {
-            text-align: justify;
-        }
-    </style>
-</head>
-<body>
-    <div class="justified-text">
-        In this study, a dataset comprising 250 samples was utilized to train the different models. The samples were collected from several large, multisite studies that utilized diverse ASL acquisition protocols, as detailed in Table 1. The ratings of the ASL CBF data were meticulously assessed by three expert raters: John A. Detre, Sudipto Dolui, and Ze Wang. Dr. Detre, the inventor of ASL, has over 30 years of experience, while Dr. Dolui and Dr. Wang each have more than 10 years of experience with this technique. Their extensive experience in ASL CBF quality assurance ensures the dataset’s reliability and validity. Additionally, a separate set of 50 CBF maps rated by Dr. Detre and Dr. Dolui was used as the test set to assess the performance of the algorithms on unseen data.
-    </div>
-</body>
-</html>
+<p align="justify">
+In this study, a dataset comprising 250 samples was utilized to train the different models. The samples were collected from several large, multisite studies that utilized diverse ASL acquisition protocols, as detailed in Table 1. The ratings of the ASL CBF data were meticulously assessed by three expert raters: John A. Detre, Sudipto Dolui, and Ze Wang. Dr. Detre, the inventor of ASL, has over 30 years of experience, while Dr. Dolui and Dr. Wang each have more than 10 years of experience with this technique. Their extensive experience in ASL CBF quality assurance ensures the dataset’s reliability and validity. Additionally, a separate set of 50 CBF maps rated by Dr. Detre and Dr. Dolui was used as the test set to assess the performance of the algorithms on unseen data.
+</p>
 
 <p align="center">
   <img src="img/dataset.png" alt="Example of the ASL CBF rating tool." width="800"/>
