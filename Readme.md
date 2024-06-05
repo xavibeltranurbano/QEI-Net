@@ -41,22 +41,20 @@ QEI-ASL-CBF/
 │   ├    └── CSF_prob_CO_Reg.nii
     └── ...
 ├── src
-│   ├── src_QEI-Net
-│   ├── src_3_FCN_QEI-Net
-│   ├── src_8_FCN_QEI-Net
+│   ├── src_Reg-QEI-Net
 │   ├── src_7_FCN_QEI-Net
 │   ├── src_MSC_QEI-Net
+│   ├── src_BC-Net
 │   ├── preprocessing
 ```
 To reproduce the results, choose one of the aproaches presented in this work, and execute the main.py script:
 ```bash
-python3 src_QEI-Net/main.py
+python3 src_Reg-QEI-Net/main.py
 ```
 This will train and validate the selected model, storing the results in the results/ directory. Ensure to update the paths with your own directories as needed.
 
 ## Dataset
-In this study, a dataset comprising 250 samples was utilized. The samples were collected from several large,multisite studies that utilized diverse ASL acquisition protocols, as detailed in Table 1. The ratings of the ASL CBF data were meticulously assessed by three expert raters: John A. Detre, Sudipto Dolui and Ze Wang. Dr. Detre is the inventor of ASL and has over 30 years of experience working with this technique. Dr. Dolui and Dr. Wang each have more than 10 years of experience. Their extensive experience in ASL CBF quality assurance ensures the dataset’s reliability and validity.
-
+In this study, a dataset comprising 250 samples was utilized to train the different models. The samples were collected from several large, multisite studies that utilized diverse ASL acquisition protocols, as detailed in Table 1. The ratings of the ASL CBF data were meticulously assessed by three expert raters: John A. Detre, Sudipto Dolui and Ze Wang. Dr. Detre, the inventor of ASL, has over 30 years of experience, while Dr. Dolui and Dr. Wang each has more than 10 years of experience with this technique. Their extensive experience in ASL CBF quality assurance ensures the dataset’s reliability and validity. Additionally, a separate set of 50 CBF maps rated by Dr. Detre and Dr. Dolui was used as the test set to assess the performance of the algorithms on unseen data. 
 <p align="center">
   <img src="img/dataset.png" alt="Example of the ASL CBF rating tool." width="800"/>
 <em> Table.1. Information of the different datasets used in this work.</em>  
@@ -79,14 +77,10 @@ To ensure consistency in the evaluation process across different raters, specifi
 </p>
 
 
-
-### Metrics
-The effectiveness of various approaches was analyzed using the Mean Squared Error (MSE) metric, assessing the difference between predicted and expert ratings. Additionally, other metrics such as sensitivity, specificity, the area under the curve (AUC), and Pearson Correlation, have also been used to evaluate this study.
-
 ### Preprocessing
 Minimal preprocessing was required to maintain the integrity of the raw images:
-- **FCN-QEI-Net**: Binarization of brain tissue probability maps and image smoothing.
-- **CNN approaches (QEI-Net,  MSC-QEI-Net and BC-Net)**: Affine Transformation for consistent image size, intensity clipping with the values [-10, 80] and normalization of image values.
+- **FCN-QEI-Net**: Generation of binary masks corresponding to GM, WM and CSF to extract CBF signal in the regions, and image smoothing using a 5 mm isotropic kernel.
+- **CNN approaches (QEI-Net,  MSC-QEI-Net and BC-Net)**: Affine Transformation for consistent image size, intensity clipping with the values [-10, 80] and normalization of intensity values.
 
 <p align="center">
   <img src="img/PREPROCESSING.png" alt="Workflow of the preprocessing pipeline." width="400"/>
@@ -101,7 +95,7 @@ We developed and compared several innovative models to enhance the automated qua
 
 - **7-Feature-based FCN (7-FCN-QEI-Net)**: Building on the [8]'s approach, this model incorporates four additional features to enhance the robustness and accuracy of the quality assessment. The integration of these comprehensive features allows for a more nuanced analysis of the ASL CBF maps.
 
-- **Deep learning-based regression model (QEI-Net)**: A deep learning-based regression model specifically tailored for assessing the QEI of ASL CBF maps. QEI-Net employs advanced neural network architectures to process the raw imaging data directly, facilitating an automated, precise evaluation.
+- **Deep learning-based regression model (Reg-QEI-Net)**: A deep learning-based regression model specifically tailored for assessing the QEI of ASL CBF maps. QEI-Net employs advanced neural network architectures to process the raw imaging data directly, facilitating an automated, precise evaluation.
 
 - **A 3D Multi-Stage Classification Model (MSC-QEI-Net)**: A novel multi-stage classification approach that leverages the assessments from individual raters. This model synthesizes the outputs into a continuous QEI by balancing the insights from multiple expert evaluations, ensuring a well-rounded and accurate measurement.
 
@@ -111,48 +105,47 @@ We developed and compared several innovative models to enhance the automated qua
 <br>
 </p>
 
-### Discarding Unacceptable Images
-One of the objectives of this project is to develop a methodology for rejecting CBF maps with unacceptable quality to avoid bias in subsequent statistical analysis. After computing the QEI using the presented DL approaches, we calculated the Youden Index (YI) to set the threshold between data to retain and data to exclude. Expert ratings were binarized as follows: images rated 1 by any rater were classified as Unacceptable Quality (0), while all other images were classified as Acceptable Quality (1). Using the YI, we set the threshold to discard unacceptable quality ASL CBF maps. Additionally, we calculated a customized threshold which ensures a sensitivity of at least 95%.
-
 ### A 3D Binary Classification Network (BC-Net)
-One of the main objectives of this project is to develop a robust method for discarding unacceptable CBF Maps, which can be framed as a binary classification problem instead of assigning a continuous number defining the quality. Therefore, we also implemented a 3D deep learning classifier with a binary loss function to tackle the problem. For this model, we used the same parameters and architecture as the QEI-Net methodology described in Section 3.6. The only difference lies in the ground truth used to train the network. For QEI-Net, we used continuous values within the range [0,1], whereas for BC-QEI-Net, we used binary values. The output of the BC-Net, which employs a Sigmoid activation function in its final FCL, fall within the range of 0 to 1. This value represents the probability that a given sample is of acceptable quality. 
+One of the main objectives of this project is to develop a robust method for discarding unacceptable CBF Maps, which can be framed as a binary classification problem instead of assigning a continuous number defining the quality. Therefore, we also implemented a 3D deep learning classifier with a binary loss function to tackle the problem. For this model, we used the same parameters and architecture as the Reg-QEI-Net methodology. The only difference lies in the ground truth used to train the network. For QEI-Net, we used continuous values within the range [0,1], whereas for BC-QEI-Net, we used binary values. The output of the BC-Net, which employs a Sigmoid activation function in its final FCL, fall within the range of 0 to 1. This value represents the probability that a given sample is of acceptable quality. 
 
 ### Additional Experiments
 To develop a more robust method, various combinations of the previous methods were studied. However, since some models represent the QEI and BC-Net represent the probability of possessing acceptable quality, only the best performing methodologies specifically focused on assessing a QEI (QEI-Net, 7FCN-QEI-Net, and MSC-QEI-Net) were utilized. The different combination methods are as follows:
 1.	**Ensemble 1:** This is the simplest ensemble method, which consists of averaging the predictions from each of the networks. 
 2.	**Ensemble 2:** In this method, we calculate the weighted average of the predictions. To calculate the weights of each method, we have trained a function that optimizes the weights assigned to the different models to minimize the MSE between the actual and prediction. 
-3.	**Ensemble 3:** This method utilizes stacking, an ensemble technique that combines the predictions of multiple base models to enhance predictive performance. In this approach, the predictions from all the QEI models serve as input features for a meta-model, which was trained using leave-one-out cross-validation (LOO CV) with a Linear Regression algorithm that learns to make the final prediction by leveraging the strengths and mitigating the weaknesses of the individual models.
+3.	**Ensemble 3:** This method utilizes stacking, an ensemble technique that combines the predictions of multiple base models to enhance predictive performance. In this approach, the predictions from all the QEI models serve as input features for a meta-model, which was trained using 5-fold cross validation (CV) with a Linear Regression algorithm that learns to make the final prediction by leveraging the strengths and mitigating the weaknesses of the individual models.
+
+### Metrics
+To assess the performance of the algorithms, we computed the squared errors (SE) between the average manual ratings and the automated QEI for each CBF map. In addition to that, we also reported the Pearson’s correlation coefficient between the automated QEI and the average human rating and compared that to the correlation between the raters. Finally, dividing the data as unacceptable and acceptable as described previously, we computed the receiver operating characteristic (ROC) curve, and computed the area under the curve (AUC). To establish a QEI threshold we have calculated the Youden Index (YI). The Youden Index (YI) is a statistical measure that maximizes both sensitivity and specificity. By computing the Euclidean distance between all points of the ROC curve and the ideal point located at the coordinates [1,0], the YI identifies the best operating point. Thereafter, we computed sensitivity and specificity based on the that threshold. 
 
 ### Results
 
-### Table 1: Performance on quality assessment of ASL CBF Maps
+### Table 1: Algorithm evaluation metrics for val set
 
-| Approach                        | SE (Mean) | SE (std) | Pearson Correlation |
-|---------------------------------|-----------|----------|---------------------|
-| (Dolui et al. (2024))’s approach| 0.02160   | 0.03184  | 0.90338             |
-| 7FCN-QEI-Net                    | 0.01646   | 0.02986  | 0.92312             |
-| QEI-Net                         | 0.01251   | 0.02213  | 0.94262             |
-| MSC-QEI-Net                     | 0.02491   | 0.02659  | 0.91202             |
-| Ensemble 1                      | 0.01144   | 0.02008  | 0.94725             |
-| Ensemble 2                      | **0.01112**   | **0.01917**  | **0.94864**             |
-| Ensemble 3                      | 0.01144   | 0.02011  | 0.94710             |
+| Method               | Median of SE (IQR)    | Pearson's Correlation Coefficient | AUC  | Sensitivity | Specificity | Youden Index |
+|----------------------|-----------------------|-----------------------------------|------|-------------|-------------|--------------|
+| Dolui et al. 2024 QEI| 0.00416 (0.01416)     | 0.943                             | 0.948| 0.904       | 0.922       | 0.457        |
+| 7FCN-QEI-Net         | 0.01044 (0.02562)     | 0.903                             | 0.950| **0.911**   | 0.922       | 0.325        |
+| Reg-QEI-Net          | 0.00611 (0.01556)     | 0.923                             | 0.958| 0.815       | **0.965**   | **0.461**    |
+| MSC-QEI-Net          | 0.01348 (0.02287)     | 0.921                             | 0.941| 0.822       | 0.930       | 0.419        |
+| BC-Net               |                       | 0.941                             | 0.889| 0.852       | 0.614       |              |
+| Ensemble 1           | 0.00505 (0.01124)     | 0.947                             | 0.963| 0.889       | 0.930       | 0.348        |
+| Ensemble 2           | **0.00432 (0.01078)** | **0.949**                         | **0.964** | 0.896       | 0.913       | 0.327        |
+| Ensemble 3           | 0.00439 (0.01134)     | 0.945                             | 0.961| 0.896       | 0.904       | 0.335        |
+*Table 1: Comparison of the current state-of-the-art in the field of QEI of ASL CBF Maps ((Dolui et al. (2024))’s) with the different QA methods presented in this study using the validation data set.*
 
-*Table 1: Comparison of SE (Mean and std) and Pearson Correlation across different approaches.*
+### Table 2: Algorithm evaluation metrics for test set
 
-### Table 2: Performance on discarding unacceptable CBF Maps by utilizing the Youden Index (YI) and a customized threshold for 95% sensitivity 
-
-| Approach               | AUC    | Sensitivity (YI) | Specificity (YI) | YI Value | Sensitivity (95%) | Specificity (95%) | Threshold Value (95%) |
-|------------------------|--------|------------------|----------------|----------|-------------------|-------------------|-----------------------|
-| Dolui et al. 2024 QEI  | 0.94754| 0.9037           | 0.92174        | 0.45681  | **0.96296**           | 0.54783           | 0.21641               |
-| 7FCN-QEI-Net           | 0.95027| **0.91111**          | 0.92174        | 0.32457  | 0.95556           | 0.66957           | 0.16466               |
-| QEI-Net                | 0.95768| 0.81481          | **0.96522**        | 0.46078  | 0.95556           | 0.7913            | 0.24179               |
-| MSC-QEI-Net            | 0.93739| 0.79259          | 0.95652        | 0.41027  | 0.95556           | 0.57391           | 0.2615                |
-| BC-QEI-Net             | 0.94074| 0.88889          | 0.85217        | 0.61382  | 0.95556           | 0.66087           | 0.21526               |
-| Ensemble 1             | 0.96329| 0.88889          | 0.93043        | 0.34831  | 0.95556           | **0.8087**            | 0.23381               |
-| Ensemble 2             | **0.96367**| 0.8963           | 0.91304        | 0.32739  | 0.95556           | 0.8               | 0.23538               |
-| Ensemble 3             | 0.96245| 0.8963           | 0.91304        | 0.32634  | 0.95556           | 0.7913            | 0.23197               |
-
-*Table 2: Comparison of AUC, Sensitivity, Specificity, YI Value, and Threshold Value at 95% Sensitivity across different approaches.*
+| Method               | Median of SE (IQR)    | Pearson's Correlation Coefficient | AUC  | Sensitivity | Specificity |
+|----------------------|-----------------------|-----------------------------------|------|-------------|-------------|
+| Dolui et al. 2024 QEI| 0.02945 (0.05103)     | 0.808                             | 0.896| 0.865       | 0.583       |
+| 7FCN-QEI-Net         | 0.01256 (0.0268)      | 0.844                             | 0.915| 0.757       | 0.571       |
+| Reg-QEI-Net          | 0.01464 (0.02414)     | 0.905                             | 0.950| 0.892       | 0.765       |
+| MSC-QEI-Net          | 0.02179 (0.03967)     | 0.877                             | 0.909| 0.838       | 0.625       |
+| BC-Net               |                       | 0.946                             | 0.865| 0.706       |             |
+| Ensemble 1           | **0.00904 (0.02551)** | 0.897                             | 0.946| 0.892       | 0.750       |
+| Ensemble 2           | 0.01126 (0.02616)     | **0.905**                         | **0.946** | **0.919** | 0.786       |
+| Ensemble 3           | 0.01153 (0.02659)     | **0.905**                         | **0.946** | **0.919** | **0.800**  |
+*Table 2:Comparison of the current state-of-the-art in the field of QEI of ASL CBF Maps ((Dolui et al. (2024))’s) with the different QA methods presented in this study using the test data set.*
 
 
 
