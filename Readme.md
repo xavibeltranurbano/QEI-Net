@@ -66,10 +66,15 @@ In this study, a dataset comprising 250 samples was utilized to train the differ
 <p align="justify">
 To ensure consistency in the evaluation process across different raters, specific guidelines were established and followed (see Figure 5). These guidelines are defined below:
 </p>
-* **Unacceptable (rating1):** CBF map is severely degraded by artifacts and is uninterpretable.
-* **Poor (rating 2):** CBF map has one or more major artifacts, but can still potentially yield useful information.
-* **Average (rating 3):** Acceptable quality CBF map with minor artifacts that do not significantly reduce. 
-* **Excellent (rating 4):** High quality CBF map without artifacts.
+
+<p align="justify">
+<ul>
+<li><b>Unacceptable (rating 1):</b> CBF map is severely degraded by artifacts and is uninterpretable.</li>
+<li><b>Poor (rating 2):</b> CBF map has one or more major artifacts, but can still potentially yield useful information.</li>
+<li><b>Average (rating 3):</b> Acceptable quality CBF map with minor artifacts that do not significantly reduce.</li>
+<li><b>Excellent (rating 4):</b> High quality CBF map without artifacts.</li>
+</ul>
+</p>
 
 
 <p align="center">
@@ -97,13 +102,18 @@ Minimal preprocessing was required to maintain the integrity of the raw images:
 ### DL Models for quality assesment of ASL CBF Maps
 <p align="justify">
 We developed and compared several innovative models to enhance the automated quality evaluation index (QEI) of ASL CBF maps (see Figure 1):
-
-- **7-Feature-based FCN (7-FCN-QEI-Net)**: Building on the [8]'s approach, this model incorporates four additional features to enhance the robustness and accuracy of the quality assessment. The integration of these comprehensive features allows for a more nuanced analysis of the ASL CBF maps.
-
-- **Deep learning-based regression model (Reg-QEI-Net)**: A deep learning-based regression model specifically tailored for assessing the QEI of ASL CBF maps. QEI-Net employs advanced neural network architectures to process the raw imaging data directly, facilitating an automated, precise evaluation.
-
-- **A 3D Multi-Stage Classification Model (MSC-QEI-Net)**: A novel multi-stage classification approach that leverages the assessments from individual raters. This model synthesizes the outputs into a continuous QEI by balancing the insights from multiple expert evaluations, ensuring a well-rounded and accurate measurement.
 </p>
+
+<p align="justify">
+<ul>
+<li><b>7-Feature-based FCN (7-FCN-QEI-Net):</b> Building on the [8]'s approach, this model incorporates four additional features to enhance the robustness and accuracy of the quality assessment. The integration of these comprehensive features allows for a more nuanced analysis of the ASL CBF maps.</li>
+
+<li><b>Deep learning-based regression model (Reg-QEI-Net):</b> A deep learning-based regression model specifically tailored for assessing the QEI of ASL CBF maps. QEI-Net employs advanced neural network architectures to process the raw imaging data directly, facilitating an automated, precise evaluation.</li>
+
+<li><b>A 3D Multi-Stage Classification Model (MSC-QEI-Net):</b> A novel multi-stage classification approach that leverages the assessments from individual raters. This model synthesizes the outputs into a continuous QEI by balancing the insights from multiple expert evaluations, ensuring a well-rounded and accurate measurement.</li>
+</ul>
+</p>
+
 <p align="center">
   <img src="img/combined_all.png" alt="Example of the ASL CBF rating tool." width="800"/>
   <em> Figure.3. Schematic of the different deep learning pipelines implemented in this work. A) Feature-Based approach (7FCN-QEI-Net) B) Regression approach (QEI-Net) C) Multi-Stage Classification approach (MSC-QEI-Net). </em>  
@@ -118,10 +128,18 @@ One of the main objectives of this project is to develop a robust method for dis
 ### Additional Experiments
 <p align="justify">
 To develop a more robust method, various combinations of the previous methods were studied. However, since some models represent the QEI and BC-Net represent the probability of possessing acceptable quality, only the best performing methodologies specifically focused on assessing a QEI (QEI-Net, 7FCN-QEI-Net, and MSC-QEI-Net) were utilized. The different combination methods are as follows:
-1.	**Ensemble 1:** This is the simplest ensemble method, which consists of averaging the predictions from each of the networks. 
-2.	**Ensemble 2:** In this method, we calculate the weighted average of the predictions. To calculate the weights of each method, we have trained a function that optimizes the weights assigned to the different models to minimize the MSE between the actual and prediction. 
-3.	**Ensemble 3:** This method utilizes stacking, an ensemble technique that combines the predictions of multiple base models to enhance predictive performance. In this approach, the predictions from all the QEI models serve as input features for a meta-model, which was trained using 5-fold cross validation (CV) with a Linear Regression algorithm that learns to make the final prediction by leveraging the strengths and mitigating the weaknesses of the individual models.
 </p>
+
+<p align="justify">
+1. <b>Ensemble 1:</b> This is the simplest ensemble method, which consists of averaging the predictions from each of the networks. 
+</p>
+<p align="justify">
+2. <b>Ensemble 2:</b> In this method, we calculate the weighted average of the predictions. To calculate the weights of each method, we have trained a function that optimizes the weights assigned to the different models to minimize the MSE between the actual and prediction. 
+</p>
+<p align="justify">
+3. <b>Ensemble 3:</b> This method utilizes stacking, an ensemble technique that combines the predictions of multiple base models to enhance predictive performance. In this approach, the predictions from all the QEI models serve as input features for a meta-model, which was trained using 5-fold cross validation (CV) with a Linear Regression algorithm that learns to make the final prediction by leveraging the strengths and mitigating the weaknesses of the individual models.
+</p>
+
 
 ### Metrics
 <p align="justify">
