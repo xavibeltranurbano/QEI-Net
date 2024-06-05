@@ -11,7 +11,7 @@ Xavier Beltran Urbano,  Sudipto Dolui and John A Detre
 ## Setting Up the Project
 1. Clone the project:
   ```bash
-  git https://github.com/xavibeltranurbano/QEI-Net/tree/main
+  git https://github.com/xavibeltranurbano/Reg-QEI-Net/tree/main
   cd QEI-Net
   ```
 2. Using a virtual environment is strongly recommended.
