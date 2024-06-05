@@ -131,6 +131,7 @@ To assess the performance of the algorithms, we computed the squared errors (SE)
 | Ensemble 1           | 0.00505 (0.01124)     | 0.947                             | 0.963| 0.889       | 0.930       | 0.348        |
 | Ensemble 2           | **0.00432 (0.01078)** | **0.949**                         | **0.964** | 0.896       | 0.913       | 0.327        |
 | Ensemble 3           | 0.00439 (0.01134)     | 0.945                             | 0.961| 0.896       | 0.904       | 0.335        |
+
 *Table 1: Comparison of the current state-of-the-art in the field of QEI of ASL CBF Maps ((Dolui et al. (2024))’s) with the different QA methods presented in this study using the validation data set.*
 
 ### Table 2: Algorithm evaluation metrics for test set
@@ -145,6 +146,7 @@ To assess the performance of the algorithms, we computed the squared errors (SE)
 | Ensemble 1           | **0.00904 (0.02551)** | 0.897                             | 0.946| 0.892       | 0.750       |
 | Ensemble 2           | 0.01126 (0.02616)     | **0.905**                         | **0.946** | **0.919** | 0.786       |
 | Ensemble 3           | 0.01153 (0.02659)     | **0.905**                         | **0.946** | **0.919** | **0.800**  |
+
 *Table 2:Comparison of the current state-of-the-art in the field of QEI of ASL CBF Maps ((Dolui et al. (2024))’s) with the different QA methods presented in this study using the test data set.*
 
 
