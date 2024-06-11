@@ -83,9 +83,11 @@ To ensure consistency in the evaluation process across different raters, specifi
 ### Preprocessing
 <p align="justify">
 Minimal preprocessing was required to maintain the integrity of the raw images:
-- **FCN-QEI-Net**: Generation of binary masks corresponding to GM, WM and CSF to extract CBF signal in the regions, and image smoothing using a 5 mm isotropic kernel.
-- **CNN approaches (QEI-Net,  MSC-QEI-Net and BC-Net)**: Affine Transformation for consistent image size, intensity clipping with the values [-10, 80] and normalization of intensity values.
 </p>
+<ul>
+  <li><b>FCN-QEI-Net</b>: Generation of binary masks corresponding to GM, WM, and CSF to extract CBF signal in the regions, and image smoothing using a 5 mm isotropic kernel.</li>
+  <li><b>CNN approaches (QEI-Net, MSC-QEI-Net, and BC-Net)</b>: Affine Transformation for consistent image size, intensity clipping with the values [-10, 80], and normalization of intensity values.</li>
+</ul>
 <p align="center">
   <img src="img/PREPROCESSING.png" alt="Workflow of the preprocessing pipeline." width="400"/>
 </p>
@@ -94,11 +96,8 @@ Minimal preprocessing was required to maintain the integrity of the raw images:
 </p>
 
 
-### DL Models for quality assesment of ASL CBF Maps
-<p align="justify">
-We developed and compared several innovative models to enhance the automated quality evaluation index (QEI) of ASL CBF maps (see Figure 1):
-</p>
 
+### DL Models for quality assesment of ASL CBF Maps
 <p align="justify">
 We developed and compared several innovative models to enhance the automated quality evaluation index (QEI) of ASL CBF maps (see Figure 1):
 </p>
