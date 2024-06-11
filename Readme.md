@@ -60,16 +60,19 @@ In this study, a dataset comprising 250 samples was utilized to train the differ
 
 <p align="center">
   <img src="img/dataset.png" alt="Example of the ASL CBF rating tool." width="800"/>
-<em> Table.1. Information of the different datasets used in this work.</em>  
   <br>
+  <em>Table 1. Information of the different datasets used in this work.</em>
 </p>
+
 <p align="justify">
 To ensure consistency in the evaluation process across different raters, specific guidelines were established and followed (see Figure 5). These guidelines are defined below:
 </p>
-* **Unacceptable (rating1):** CBF map is severely degraded by artifacts and is uninterpretable.
-* **Poor (rating 2):** CBF map has one or more major artifacts, but can still potentially yield useful information.
-* **Average (rating 3):** Acceptable quality CBF map with minor artifacts that do not significantly reduce. 
-* **Excellent (rating 4):** High quality CBF map without artifacts.
+<ul>
+  <li><strong>Unacceptable (rating 1):</strong> CBF map is severely degraded by artifacts and is uninterpretable.</li>
+  <li><strong>Poor (rating 2):</strong> CBF map has one or more major artifacts, but can still potentially yield useful information.</li>
+  <li><strong>Average (rating 3):</strong> Acceptable quality CBF map with minor artifacts that do not significantly reduce information value.</li>
+  <li><strong>Excellent (rating 4):</strong> High quality CBF map without artifacts.</li>
+</ul>
 
 
 <p align="center">
