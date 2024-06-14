@@ -179,7 +179,7 @@ To assess the performance of the algorithms, we computed the squared errors (SE)
 
 
 
-For more detailed information, please refer to the [manuscript](manuscript/MAIA_Master_Thesis_Template.pdf).
+For more detailed information, please refer to the [manuscript](/Users/xavibeltranurbano/PycharmProjects/QEI/QEI-Net/manuscript/QEI-Net.pdf).
 
 ## References
 
