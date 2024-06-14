@@ -179,7 +179,7 @@ To assess the performance of the algorithms, we computed the squared errors (SE)
 
 
 
-For more detailed information, please refer to the [manuscript](/Users/xavibeltranurbano/PycharmProjects/QEI/QEI-Net/manuscript/QEI-Net.pdf).
+For more detailed information, please refer to the [manuscript](manuscript/QEI-Net.pdf).
 
 ## References
 
