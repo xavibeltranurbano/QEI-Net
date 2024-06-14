@@ -149,16 +149,16 @@ To assess the performance of the algorithms, we computed the squared errors (SE)
 
 ### Table 1: Algorithm evaluation metrics for val set
 
-| Method               | Median of SE (IQR)    | Pearson's Correlation Coefficient | AUC  | Sensitivity | Specificity | Youden Index |
-|----------------------|-----------------------|-----------------------------------|------|-------------|-------------|--------------|
-| Dolui et al. 2024 QEI| 0.00416 (0.01416)     | 0.943                             | 0.948| 0.904       | 0.922       | 0.457        |
-| 7FCN-QEI-Net         | 0.01044 (0.02562)     | 0.903                             | 0.950| **0.911**   | 0.922       | 0.325        |
-| Reg-QEI-Net          | 0.00611 (0.01556)     | 0.923                             | 0.958| 0.815       | **0.965**   | **0.461**    |
-| MSC-QEI-Net          | 0.01348 (0.02287)     | 0.921                             | 0.941| 0.822       | 0.930       | 0.419        |
-| BC-Net               |                       | 0.941                             | 0.889| 0.852       | 0.614       |              |
-| Ensemble 1           | 0.00505 (0.01124)     | 0.947                             | 0.963| 0.889       | 0.930       | 0.348        |
+| Method               | Median of SE (IQR)    | Pearson's Correlation Coefficient | AUC       | Sensitivity | Specificity | Youden Index |
+|----------------------|-----------------------|-----------------------------------|-----------|-------------|-------------|--------------|
+| Dolui et al. 2024 QEI| 0.00416 (0.01416)     | 0.943                             | 0.948     | 0.904       | 0.922       | 0.457        |
+| 7FCN-QEI-Net         | 0.01044 (0.02562)     | 0.903                             | 0.950     | **0.911**   | 0.922       | 0.325        |
+| Reg-QEI-Net          | 0.00611 (0.01556)     | 0.923                             | 0.958     | 0.815       | **0.965**   | **0.461**    |
+| MSC-QEI-Net          | 0.01348 (0.02287)     | 0.921                             | 0.941     | 0.822       | 0.930       | 0.419        |
+| BC-Net               | -                     | -                                 | 0.940     | 0.889       | 0.852       |   0.614           |
+| Ensemble 1           | 0.00505 (0.01124)     | 0.947                             | 0.963     | 0.889       | 0.930       | 0.348        |
 | Ensemble 2           | **0.00432 (0.01078)** | **0.949**                         | **0.964** | 0.896       | 0.913       | 0.327        |
-| Ensemble 3           | 0.00439 (0.01134)     | 0.945                             | 0.961| 0.896       | 0.904       | 0.335        |
+| Ensemble 3           | 0.00439 (0.01134)     | 0.945                             | 0.961     | 0.896       | 0.904       | 0.335        |
 
 *Table 1: Comparison of the current state-of-the-art in the field of QEI of ASL CBF Maps ((Dolui et al. (2024))’s) with the different QA methods presented in this study using the validation data set.*
 
@@ -166,14 +166,14 @@ To assess the performance of the algorithms, we computed the squared errors (SE)
 
 | Method               | Median of SE (IQR)    | Pearson's Correlation Coefficient | AUC  | Sensitivity | Specificity |
 |----------------------|-----------------------|-----------------------------------|------|-------------|-------------|
-| Dolui et al. 2024 QEI| 0.02945 (0.05103)     | 0.808                             | 0.896| 0.865       | 0.583       |
-| 7FCN-QEI-Net         | 0.01256 (0.0268)      | 0.844                             | 0.915| 0.757       | 0.571       |
-| Reg-QEI-Net          | 0.01464 (0.02414)     | 0.905                             | 0.950| 0.892       | 0.765       |
-| MSC-QEI-Net          | 0.02179 (0.03967)     | 0.877                             | 0.909| 0.838       | 0.625       |
-| BC-Net               |                       | 0.946                             | 0.865| 0.706       |             |
-| Ensemble 1           | **0.00904 (0.02551)** | 0.897                             | 0.946| 0.892       | 0.750       |
-| Ensemble 2           | 0.01126 (0.02616)     | **0.905**                         | **0.946** | **0.919** | 0.786       |
-| Ensemble 3           | 0.01153 (0.02659)     | **0.905**                         | **0.946** | **0.919** | **0.800**  |
+| Dolui et al. 2024 QEI| 0.02945 (0.05103)     | 0.808                             | 0.896 | 0.865       | 0.583       |
+| 7FCN-QEI-Net         | 0.01256 (0.0268)      | 0.844                             | 0.915 | 0.757       | 0.571       |
+| Reg-QEI-Net          | 0.01464 (0.02414)     | 0.905                             | **0.950** | 0.892       | 0.765       |
+| MSC-QEI-Net          | 0.02179 (0.03967)     | 0.877                             | 0.909 | 0.838       | 0.625       |
+| BC-Net               | -                     | -                                 | 0.946 | 0.880       | 0.705       |
+| Ensemble 1           | **0.00904 (0.02551)** | 0.897                             | 0.946 | 0.892       | 0.750       |
+| Ensemble 2           | 0.01126 (0.02616)     | **0.905**                         | 0.946 | **0.919**   | 0.786       |
+| Ensemble 3           | 0.01153 (0.02659)     | **0.905**                         | 0.946| **0.919**   | **0.800**   |
 
 *Table 2:Comparison of the current state-of-the-art in the field of QEI of ASL CBF Maps ((Dolui et al. (2024))’s) with the different QA methods presented in this study using the test data set.*
 
